@@ -1,0 +1,1 @@
+# mypace-custom-seo-metatag
