@@ -4,16 +4,16 @@ Plugin Name: mypace Custom SEO Metatag
 Plugin URI: https://github.com/mypacecreator/mypace-custom-seo-metatag
 Description: meta内の不要なタグを非出力にしたり、記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力したりする
 Author: Kei Nomura
-Version: 0.1
+Version: 0.2
 Author URI: http://mypacecreator.net/
 */
 
 require 'plugin-updates/plugin-update-checker.php';
 $className = PucFactory::getLatestClassVersion('PucGitHubChecker');
 $myUpdateChecker = new $className(
-    'https://github.com/mypacecreator/mypace-custom-seo-metatag/',
-    __FILE__,
-    'master'
+		'https://github.com/mypacecreator/mypace-custom-seo-metatag/',
+		__FILE__,
+		'master'
 );
 $myUpdateChecker->setAccessToken( '72e41eedb3fc40f7e6b3a1aa07e2704454dd580f');
 
@@ -69,3 +69,12 @@ function mypace_more_link($output) {
 	return $output;
 }
 add_filter( 'the_content_more_link', 'mypace_more_link' );
+
+//親子カテゴリーがあるときチェック済カテゴリーが上に来ないように
+function mypace_terms_checklist_args( $args, $post_id ){
+	if ( $args['checked_ontop'] !== false ){
+		$args['checked_ontop']= false;
+	}
+	return $args;
+}
+add_filter( 'wp_terms_checklist_args', 'mypace_terms_checklist_args' , 10, 2 );
