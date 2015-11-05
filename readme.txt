@@ -1,14 +1,13 @@
 === mypace Custom SEO Metatag ===
-Contributors: inc2734, ryu263, tomothumb, nanniku, mt8.biz, NExt-Season, kuck1u, mypacecreator
+Contributors: mypacecreator
 Donate link: http://www.amazon.co.jp/registry/wishlist/33HK9YOKDESUO
-Tags: plugin, seo
+Tags: plugin, seo, meta
 Requires at least: 4.0
 Tested up to: 4.3.1
 Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-MW WP Form is shortcode base contact form plugin. This plugin have many feature. For example you can use many validation rules, contact data saving, and chart aggregation using saved contact data.
 
 == Description ==
 
@@ -24,7 +23,7 @@ https://github.com/mypacecreator/mypace-custom-seo-metatag/
 
 = The following third-party resources =
 
-https://github.com/YahnisElsts/plugin-update-checker
+Plugin Update Checker
 Source: https://github.com/YahnisElsts/plugin-update-checker/
 
 = Contributors =
