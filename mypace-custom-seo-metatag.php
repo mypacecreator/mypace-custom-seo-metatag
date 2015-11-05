@@ -4,7 +4,7 @@ Plugin Name: mypace Custom SEO Metatag
 Plugin URI: https://github.com/mypacecreator/mypace-custom-seo-metatag
 Description: meta内の不要なタグを非出力にしたり、記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力したりする
 Author: Kei Nomura
-Version: 0.5
+Version: 0.6
 Author URI: http://mypacecreator.net/
 */
 
@@ -36,6 +36,14 @@ function mypace_output_normal_feed( ) {
 	echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(get_bloginfo('name')) . 'のフィード" href="' . get_feed_link() . '" />' . "\n";
 }
 add_filter( 'wp_head','mypace_output_normal_feed' );
+
+//コメントフィードは404に
+function mypace_comment_feed_404( $obj ) {
+	if ( $obj->is_comment_feed ) {
+		wp_die( 'Page not found.', '', array( 'response' => 404, "back_link" => true ));
+	}
+}
+add_action( 'parse_query', 'mypace_comment_feed_404' );
 
 //記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力
 function mypace_output_noindex(){
@@ -83,3 +91,29 @@ function mypace_terms_checklist_args( $args, $post_id = null ) {
 	return $args;
 }
 add_filter( 'wp_terms_checklist_args', 'mypace_terms_checklist_args' , 10, 2 );
+
+//プラグインの読み込み順を制御し、最後に実行するように
+function mypace_plugin_last_load() {
+	$this_activeplugin  = '';
+	$this_plugin        = 'mypace-custom-seo-metatag/mypace-custom-seo-metatag.php';
+	$active_plugins     = get_option( 'active_plugins' );
+	$new_active_plugins = array();
+
+	foreach ( $active_plugins as $plugins ) {
+		if ( $plugins != $this_plugin ){
+			$new_active_plugins[] = $plugins;
+		} else {
+			$this_activeplugin = $this_plugin;
+		}
+	}
+
+	if ( $this_activeplugin ){
+		$new_active_plugins[] = $this_activeplugin;
+	}
+
+	if ( ! empty( $new_active_plugins ) ){
+		update_option( 'active_plugins' ,  $new_active_plugins );
+	}
+
+}
+add_action( 'activated_plugin', 'mypace_plugin_last_load' );
