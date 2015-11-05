@@ -4,7 +4,7 @@ Plugin Name: mypace Custom SEO Metatag
 Plugin URI: https://github.com/mypacecreator/mypace-custom-seo-metatag
 Description: meta内の不要なタグを非出力にしたり、記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力したりする
 Author: Kei Nomura
-Version: 0.3
+Version: 0.5
 Author URI: http://mypacecreator.net/
 */
 
@@ -20,6 +20,7 @@ $myUpdateChecker->setAccessToken( '72e41eedb3fc40f7e6b3a1aa07e2704454dd580f');
 // wp_head()の出力タグの消去
 	//remove_action('wp_head', 'wp_enqueue_scripts', 1);
 	remove_action('wp_head', 'feed_links_extra',3,0);
+	remove_action('wp_head', 'feed_links', 2);
 	remove_action('wp_head', 'rsd_link');
 	remove_action('wp_head', 'wlwmanifest_link');
 	remove_action('wp_head', 'index_rel_link');
@@ -29,6 +30,12 @@ $myUpdateChecker->setAccessToken( '72e41eedb3fc40f7e6b3a1aa07e2704454dd580f');
 	remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 	//remove_action('wp_head', 'rel_canonical');
 	remove_action('wp_head', 'wp_generator');
+
+//通常フィードは出力
+function mypace_output_normal_feed( ) {
+	echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(get_bloginfo('name')) . 'のフィード" href="' . get_feed_link() . '" />' . "\n";
+}
+add_filter( 'wp_head','mypace_output_normal_feed' );
 
 //記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力
 function mypace_output_noindex(){
