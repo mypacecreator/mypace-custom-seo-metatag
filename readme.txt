@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/33HK9YOKDESUO
 Tags: plugin, seo, meta
 Requires at least: 4.0
 Tested up to: 4.3.1
-Stable tag: 0.6
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,16 +15,16 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 = Official =
 
-https://github.com/mypacecreator/mypace-custom-seo-metatag/
+https://github.com/mypacecreator/mypace-custom-seo-metatag
 
 = GitHub =
 
-https://github.com/mypacecreator/mypace-custom-seo-metatag/
+https://github.com/mypacecreator/mypace-custom-seo-metatag
 
 = The following third-party resources =
 
-Plugin Update Checker
-Source: https://github.com/YahnisElsts/plugin-update-checker/
+WordPress GitHub Plugin Updater
+https://github.com/radishconcepts/WordPress-GitHub-Plugin-Updater
 
 = Contributors =
 
@@ -45,6 +45,9 @@ Do you have questions or issues with mypace Custom SEO Metatag? Use these suppor
 
 
 == Changelog ==
+
+= 0.6.1 =
+* Change Updater Library.
 
 = 0.6 =
 * Add function mypace_comment_feed_404, mypace_plugin_last_load
