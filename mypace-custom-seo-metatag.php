@@ -12,9 +12,6 @@ include_once 'updater.php';
 include_once 'updater-config.php';
 
 // wp_head()の出力タグの消去
-	//remove_action('wp_head', 'wp_enqueue_scripts', 1);
-	remove_action('wp_head', 'feed_links_extra',3,0);
-	remove_action('wp_head', 'feed_links', 2);
 	remove_action('wp_head', 'rsd_link');
 	remove_action('wp_head', 'wlwmanifest_link');
 	remove_action('wp_head', 'index_rel_link');
@@ -22,22 +19,7 @@ include_once 'updater-config.php';
 	remove_action('wp_head', 'start_post_rel_link');
 	remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 	remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
-	//remove_action('wp_head', 'rel_canonical');
 	remove_action('wp_head', 'wp_generator');
-
-//通常フィードは出力
-function mypace_output_normal_feed( ) {
-	echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(get_bloginfo('name')) . 'のフィード" href="' . get_feed_link() . '" />' . "\n";
-}
-add_filter( 'wp_head','mypace_output_normal_feed' );
-
-//コメントフィードは404に
-function mypace_comment_feed_404( $obj ) {
-	if ( $obj->is_comment_feed ) {
-		wp_die( 'Page not found.', '', array( 'response' => 404, "back_link" => true ));
-	}
-}
-add_action( 'parse_query', 'mypace_comment_feed_404' );
 
 //記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力
 function mypace_output_noindex(){
