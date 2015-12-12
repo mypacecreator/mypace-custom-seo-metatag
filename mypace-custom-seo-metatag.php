@@ -68,6 +68,19 @@ function mypace_terms_checklist_args( $args, $post_id = null ) {
 }
 add_filter( 'wp_terms_checklist_args', 'mypace_terms_checklist_args' , 10, 2 );
 
+//フロントページの出力条件を今までどおりに
+function mypace_custom_title( $title ){
+	if ( !is_home() && is_front_page()  ) {
+				$post_id = get_the_ID();
+				$my_title = get_post_meta( $post_id, 'mypace_title_tag', true );
+				if( !$my_title ){ //mypace Custom Title Tag プラグインでの指定があればそれを優先
+					$title = get_bloginfo( 'name' ) . " | " . get_bloginfo( 'description' );
+				}
+		}
+	return $title;
+}
+add_filter( 'pre_get_document_title', 'mypace_custom_title', 10, 2 );
+
 //プラグインの読み込み順を制御し、最後に実行するように
 function mypace_plugin_last_load() {
 	$this_activeplugin  = '';
