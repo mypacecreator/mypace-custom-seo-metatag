@@ -3,8 +3,8 @@ Contributors: mypacecreator
 Donate link: http://www.amazon.co.jp/registry/wishlist/33HK9YOKDESUO
 Tags: plugin, seo, meta
 Requires at least: 4.0
-Tested up to: 4.4
-Stable tag: 0.7
+Tested up to: 4.4.2
+Stable tag: 0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,8 +46,8 @@ Do you have questions or issues with mypace Custom SEO Metatag? Use these suppor
 
 == Changelog ==
 
-= 0.6.2 =
-* Change Updater Library.
+= 0.7 =
+* Delete function mypace_comment_feed_404
 
 = 0.6 =
 * Add function mypace_comment_feed_404, mypace_plugin_last_load

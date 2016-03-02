@@ -4,7 +4,7 @@ Plugin Name: mypace Custom SEO Metatag
 Plugin URI: https://github.com/mypacecreator/mypace-custom-seo-metatag
 Description: meta内の不要なタグを非出力にしたり、記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力したりする
 Author: Kei Nomura
-Version: 0.7
+Version: 0.8
 Author URI: http://mypacecreator.net/
 */
 
@@ -21,14 +21,26 @@ include_once 'updater-config.php';
 	remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 	remove_action('wp_head', 'wp_generator');
 
-//記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、404ページでnoindex出力
+//パンくず調整 リッチスニペット対応
+function rich_bread_crumb($output, $args) {
+	if ($args['type'] == 'list') {
+			$output = preg_replace('|<li\s+(.*?)>|mi','<li ${1} itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">',$output);
+			$output = preg_replace('|<li\s+class="(.*?current.*?)".*?>|mi','<li class="${1}">',$output);
+			$output = preg_replace('|<a\s+(.*?)>|mi','<a ${1} itemprop="url"><span itemprop="title">',$output);
+			$output = str_replace('</a>','</span></a>',$output);
+	}
+	return $output;
+}
+add_filter('bread_crumb', 'rich_bread_crumb',10,2);
+
+//記事が1件しかないカテゴリーorタグアーカイブ、および年月アーカイブ、検索結果、ページネーションした2ページ目以降、404ページでnoindex出力
 function mypace_output_noindex(){
 	global $wp_query;
 	$number = 2;
 	if ( ( is_tag() || is_category() ) && (int) $wp_query->found_posts < $number ) {
-		echo '<meta name="robots" content="noindex" />' . "\n";
-	} elseif ( is_date() || is_404() ){
-		echo '<meta name="robots" content="noindex" />' . "\n";
+		echo '<meta name="robots" content="noindex, follow" />' . "\n";
+	} elseif ( is_date() || is_search() || is_paged() || is_404() ){
+		echo '<meta name="robots" content="noindex, follow" />' . "\n";
 	}
 }
 add_action('wp_head','mypace_output_noindex');
